@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+    <string name="weather_screen_title">Weather Forecast</string>
+    <string name="splash_screen">NAB\nWeather Forecast</string>
+    <string name="search_weather_hint">Enter the city</string>
+    <string name="search_weather_helper_text">The city name is at least 3 characters</string>
+    <string name="date_template">Date: %s</string>
+    <string name="average_temperature_template">Average Temperature: %s\u2103</string>
+    <string name="pressure_template">Pressure: %s</string>
+    <string name="humidity_template">Humidity: %s\%%</string>
+    <string name="description_template">Description: %s</string>
+
+    <string name="retry">Retry</string>
+    <string name="city_min_length_error">The city name must be from 3 characters</string>
+    <string name="city_not_found_error">CITY NOT FOUND</string>
+    <string name="no_network_error">NO NETWORK</string>
+    <string name="unknown_error">UNKNOWN ERROR</string>
+
+    <string name="close">Close</string>
+    <string name="rooted_device_message">The App could not run on your phone due to rooted device</string>
+</resources>

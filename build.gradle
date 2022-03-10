@@ -1,0 +1,83 @@
+buildscript {
+    // Define versions in a single place
+    ext {
+        // Sdk and tools
+        compileSdkVersion = 31
+        minSdkVersion = 23
+        targetSdkVersion = 31
+
+        // App dependencies
+        appCompatVersion = '1.3.1'
+        constraintLayoutVersion = '2.1.1'
+        fragmentVersion = '1.1.0'
+        glideVersion = '4.9.0'
+        gradleVersion = '7.0.4'
+        kotlinVersion = '1.5.31'
+        coroutinesVersion = '1.5.2'
+        ktlintVersion = '10.2.0'
+        ktxVersion = '1.6.0'
+        fragmentKtxVersion = '1.3.6'
+        lifecycleVersion = '2.3.1'
+        materialVersion = '1.4.0'
+        navigationVersion = '2.3.5'
+        recyclerViewVersion = '1.2.1'
+        roomVersion = '2.4.1'
+        workVersion = '2.2.0'
+        pagingVersion = '2.1.0'
+        gsonVersion = '2.8.9'
+        okhttp = '4.9.2'
+        retrofit = '2.9.0'
+        stetho = '1.5.1'
+        timberVersion = '5.0.1'
+        daggerVersion = '2.40'
+        rootBeerVersion = '0.1.0'
+        liveEventVersion = '1.3.0'
+
+        // Testing dependencies
+        junitVersion = '4.13.2'
+        espressoVersion = '3.4.0'
+        coreTestingVersion = '2.1.0'
+        runnerVersion = '1.0.1'
+        testExtJunit = '1.1.3'
+        uiAutomatorVersion = '2.2.0'
+        mockitoVersion = "4.0.0"
+        mockitoAllVersion = "1.10.19"
+        mockitoAndroidVersion = "4.0.0"
+        mockwebserverVersion = "3.8.1"
+        testCoreVersion = "1.4.0"
+        testRunnerVersion = "1.4.0"
+        testRulesVersion = "1.4.0"
+
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradleVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+    }
+}
+
+plugins {
+    id "org.jlleitschuh.gradle.ktlint" version "$ktlintVersion"
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+    }
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+    // Optionally configure plugin
+    ktlint {
+        debug.set(true)
+        disabledRules.set(["no-wildcard-imports", "import-ordering"])
+    }
+}

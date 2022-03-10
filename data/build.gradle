@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization
+            minifyEnabled true
+
+            // Includes the default ProGuard rules files
+            // that are packaged with the Android Gradle plugin
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(path: ':domain')
+
+    // Room
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    api "androidx.room:room-runtime:$rootProject.roomVersion"
+    api "androidx.room:room-ktx:$rootProject.roomVersion"
+
+    // Kotlin
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+
+    // Dagger
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    api "com.google.dagger:dagger:$rootProject.daggerVersion"
+
+    // Networking
+    api "com.google.code.gson:gson:$rootProject.gsonVersion"
+    api "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"
+    api "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
+    api "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp"
+
+    // Testing dependencies
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$rootProject.mockwebserverVersion"
+}

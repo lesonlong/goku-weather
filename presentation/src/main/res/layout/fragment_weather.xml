@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.longle.presentation.ui.weather.WeatherViewModel" />
+
+        <import type="com.longle.domain.usecase.weatherforecast.result.WeatherForecastResult" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/margin_small">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:hint="@string/search_weather_hint"
+            app:errorEnabled="true"
+            app:errorText="@{viewModel.inputErrorText}"
+            app:helperText="@string/search_weather_helper_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/inputCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:inputType="textNoSuggestions"
+                tools:text="Ho Chi Minh City" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            app:data="@{viewModel.weathers.data}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            tools:listitem="@layout/weather_item" />
+
+        <!--  LOADING AND ERROR VIEW  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{viewModel.weathers.data == null || viewModel.weathers.data.size == 0}">
+
+            <ProgressBar
+                android:id="@+id/pbProgress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                app:visibleGone="@{viewModel.weathers.state == WeatherForecastResult.LOADING}" />
+
+            <Button
+                android:id="@+id/btnRetry"
+                style="@style/TextSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onRetry(inputCity.getText().toString())}"
+                android:paddingHorizontal="@dimen/padding_large"
+                android:text="@string/retry"
+                app:visibleGone="@{viewModel.weathers.state == WeatherForecastResult.CITY_NOT_FOUND_ERROR || viewModel.weathers.state == WeatherForecastResult.NO_NETWORK_ERROR || viewModel.weathers.state == WeatherForecastResult.ERROR}" />
+
+            <TextView
+                android:id="@+id/tvErrorMessage"
+                style="@style/TextSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:gravity="center"
+                android:text="@{viewModel.errorText}"
+                android:textSize="@dimen/text_normal"
+                app:visibleGone="@{viewModel.weathers.state == WeatherForecastResult.CITY_NOT_FOUND_ERROR || viewModel.weathers.state == WeatherForecastResult.NO_NETWORK_ERROR || viewModel.weathers.state == WeatherForecastResult.ERROR}"
+                tools:text="this is the long text.\nit should be in center" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
